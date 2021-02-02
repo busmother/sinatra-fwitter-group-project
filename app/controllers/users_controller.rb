@@ -3,7 +3,7 @@ require 'pry'
 class UsersController < ApplicationController
 
     get '/' do
-        erb :index, :create_user => :'tweets/tweets'
+        erb :index, :create_user => :'tweets/tweets' #I do not understand if this works or not
     end
 
     get '/signup' do
@@ -15,7 +15,6 @@ class UsersController < ApplicationController
     end
 
     post '/signup' do
-        # binding.pry
         if Helpers.is_logged_in?(session)
             redirect '/tweets'
         else
@@ -41,11 +40,10 @@ class UsersController < ApplicationController
     end
 
     post '/login' do
-        # binding.pry
         @user = User.find_by(:username => params[:username])
-        if @user && @user.authenticater(params[:password])
-            session[:user_id] = user.id
-            redirect to '/tweets'
+        if @user && @user.authenticate(params[:password])
+            session[:user_id] = @user.id
+            redirect '/tweets'
         else
             redirect '/login'
         end
@@ -54,12 +52,13 @@ class UsersController < ApplicationController
     get '/logout' do
         if Helpers.is_logged_in?(session)
             session.clear
-            redirect to '/login'
-        else
-            redirect to '/'
         end
         redirect to '/login'
     end
 
+    get "/users/:slug" do
+        @user = User.find_by_slug(slug)
+        erb :'/users/show'
+    end
 
 end
