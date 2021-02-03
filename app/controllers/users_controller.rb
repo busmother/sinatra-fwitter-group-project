@@ -27,7 +27,7 @@ class UsersController < ApplicationController
              else
                redirect "/signup"
              end
-            erb :'/tweets/tweets'
+            # erb :'/tweets/tweets'
         end
     end
 
@@ -60,5 +60,35 @@ class UsersController < ApplicationController
         @user = User.find_by_slug(slug)
         erb :'/users/show'
     end
+
+    # get '/tweets/new' do
+    #     if Helpers.is_logged_in?(session)
+    #         @user = Helpers.current_user(session)
+    #         erb :'tweets/new'
+    #     else
+    #         redirect '/login'
+    #     end
+    # end
+
+    # post '/tweets' do #move to tweets controller
+    #     if Helpers.is_logged_in?(session)
+    #         @user = Helpers.current_user(session)
+    #         # binding.pry
+    #         if params[:content].empty?
+    #             redirect 'tweets/new'
+    #         else 
+    #             new_tweet = Tweet.create(content: params[:content],user_id: @user.id)
+    #         end
+    #     else
+    #         redirect '/login'
+    #     end
+    # end
+
+    # get '/show' do #move to tweets controller
+    #     if Helpers.is_logged_in?(session)
+    #         @user = Helpers.current_user(session)
+    #         erb :'tweets/show'
+    #     end
+    # end
 
 end
